@@ -2,8 +2,8 @@ helmDefaults:
   atomic: true
   cleanupOnFail: true
   timeout: 900
-  force: true
-  verify: false
+  force: true 
+  verify: false # MUST BE FALSE. true is broken on helm 3 https://github.com/roboll/helmfile/issues/11
 
 repositories:
   - name: stable
