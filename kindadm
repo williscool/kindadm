@@ -170,6 +170,7 @@ function conn_to_kind_netw {
   fi
 }
 
+# TODO: default to 1 control plane and 2 workers and log out that is what it is doing
 while [ $# -gt 0 ]; do
   case "$1" in
     --nodes=*|-n=*)
@@ -315,7 +316,8 @@ if [[ "$REG_CFG" != 'false' ]]; then
 fi
 
 # Create KinD cluster
-"$EXEC_DIR"/kind create cluster --config <(echo "${KIND_CFG}") --name kind-"${NO_NODES}"
+# using retain because I want to be able to debug if cluster creation fails
+"$EXEC_DIR"/kind create cluster --retain --config <(echo "${KIND_CFG}") --name kind-"${NO_NODES}"
 
 # Get node names
 CLUSTER_WRKS=$("$EXEC_DIR"/kubectl get nodes | tail -n +2 | cut -d' ' -f1)

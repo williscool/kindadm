@@ -4,4 +4,9 @@ releases:
   - name: metrics-server
     namespace: metrics-server
     version: 5.8.9
+    values:
+      - args:
+          - --metric-resolution=60s
+          - --kubelet-insecure-tls
+          - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
     <<: *bitnami

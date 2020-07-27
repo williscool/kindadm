@@ -1,6 +1,6 @@
 helmDefaults:
-  atomic: true
-  cleanupOnFail: true
+  atomic: false # want to be able to inspect pods if they fail in dev so false
+  cleanupOnFail: false # want to be able to inspect pods if they fail in dev so false
   timeout: 900
   force: true 
   verify: false # MUST BE FALSE. true is broken on helm 3 https://github.com/roboll/helmfile/issues/11

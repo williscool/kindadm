@@ -3,5 +3,16 @@
 releases:
   - name: metallb
     namespace: metallb-system
+    createNamespace: true
     version: 2.4.0
+    values:
+      - configInline:
+          address-pools:
+            - name: default
+              protocol: layer2
+              addresses:
+                # https://medium.com/@JockDaRock/kubernetes-metal-lb-for-docker-for-mac-windows-in-10-minutes-23e22f54d1c8
+                - 127.0.0.240/28
+      - rbac:
+          create: true
     <<: *bitnami

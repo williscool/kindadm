@@ -44,10 +44,13 @@ for ((i=0;i<"${#REQ_BINS[@]}";i++)); do
   fi
 done
 
-# Unmask and start Docker service
-sudo systemctl is-active --quiet docker || \
-sudo systemctl unmask docker && \
-sudo systemctl start docker
+# # Unmask and start Docker service
+
+# TODO: have a flag for docker check.
+# if you give sudo permissions if not then exit here saying make sure docker is running!
+# sudo systemctl is-active --quiet docker || \
+# sudo systemctl unmask docker && \
+# sudo systemctl start docker
 
 # Create cache dir
 mkdir -p "$CACHE_DIR"
@@ -89,7 +92,7 @@ if ! `"$EXEC_DIR"/helm version --client=true 2>/dev/null | grep -q "$HELM_VER"` 
   if [[ "$SYS_WIDE" == "true" ]] ; then
     yes | sudo cp "$CACHE_DIR"/helm "$EXEC_DIR"/helm >/dev/null 2>&1
   fi
-  sudo rm -rf "$CACHE_DIR"/linux-amd64 "$CACHE_DIR"/helm-v"$HELM_VER"-linux-amd64.tar.gz && \
+  rm -rf "$CACHE_DIR"/linux-amd64 "$CACHE_DIR"/helm-v"$HELM_VER"-linux-amd64.tar.gz && \
   echo -e "\n${LIGHT_GREEN}Helm installed:${NC}" && \
   "$EXEC_DIR"/helm version --client=true && \
   source <("$EXEC_DIR"/helm completion bash 2>/dev/null)
