@@ -1,17 +1,18 @@
 helmDefaults:
-  atomic: true
+  atomic: false # want to be able to inspect pods if they fail in dev so false
   createNamespace: true
-  cleanupOnFail: true
+  cleanupOnFail: false # want to be able to inspect pods if they fail in dev so false
   timeout: 600
   force: false # MUST BE FALSE. true is broken on helm 3 https://github.com/roboll/helmfile/issues/1176
 
 repositories:
-- name: "stable"
-  url: "https://kubernetes-charts.storage.googleapis.com/"
+  - name: "stable"
+    url: "https://kubernetes-charts.storage.googleapis.com/"
 
 releases:
   - name: ingress
     namespace: ingress
+    createNamespace: true 
     chart: "stable/nginx-ingress"
     installed: true
     values:
@@ -20,18 +21,24 @@ releases:
             enable-ssl-passthrough: ""
           hostNetwork: true
           kind: DaemonSet
+      - rbac:
+          create: true
 
   - name: metallb
     namespace: metallb-system
     chart: "stable/metallb"
+    createNamespace: true 
     installed: true
     values:
       - configInline:
           address-pools:
-          - name: default
-            protocol: layer2
-            addresses:
-            - 172.17.0.1-172.17.255.255
+            - name: default
+              protocol: layer2
+              addresses:
+                # https://medium.com/@JockDaRock/kubernetes-metal-lb-for-docker-for-mac-windows-in-10-minutes-23e22f54d1c8
+                - 127.0.0.240/28
+      - rbac:
+          create: true
 
   - name: metrics-server
     namespace: kube-system
@@ -39,6 +46,14 @@ releases:
     installed: true
     values:
       - args:
-        - --metric-resolution=60s
-        - --kubelet-insecure-tls
-        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+          - --metric-resolution=60s
+          - --kubelet-insecure-tls
+          - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+
+  - name: kubernetes-dashboard
+    namespace: kube-system
+    chart: "stable/kubernetes-dashboard"
+    installed: true
+    values:
+      - rbac:
+          create: true

@@ -7,6 +7,7 @@ NC='\033[0m'   # No Color
 KIND_CFG="./kind-cfg.yaml"   # base config file
 
 
+# TODO: default to 1 control plane and 2 workers and log out that is what it is doing
 if [[ -z "$1" ]]; then
   printf "\nAt least no. of K8s nodes must be set. \nUse ${LIGHT_GREEN}\"bash $0 --help\"${NC} for details.\n"
   exit 1
@@ -88,7 +89,8 @@ for (( i=0; i<"${NO_NODES_CREATE}"; ++i));
   done
 
 # Create kINd cluster
-kind create cluster --config "${KIND_CFG}" --name kind-"${NO_NODES}"
+# using retain because I want to be able to debug if cluster creation fails
+kind create cluster --retain --config "${KIND_CFG}" --name kind-"${NO_NODES}" 
 
 # Revert the kINd config
 yes | mv "${KIND_CFG}.backup" "${KIND_CFG}"
