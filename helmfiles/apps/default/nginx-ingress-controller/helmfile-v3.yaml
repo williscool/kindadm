@@ -1,8 +1,8 @@
 {{ readFile "../../../common.yaml" }}
 
 releases:
-  - name: nginx-ingress-controller
-    namespace: ingress
+  - name: ingress-nginx
+    namespace: ingress-nginx # must match the applications that want to create ingress rules in it
     createNamespace: true
     wait: false
     atomic: false
