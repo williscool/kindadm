@@ -8,6 +8,8 @@ helmDefaults:
 repositories:
   - name: "stable"
     url: "https://kubernetes-charts.storage.googleapis.com/"
+  - name: "k8s-dashboard"
+    url: "https://kubernetes.github.io/dashboard"
 
 releases:
   - name: ingress
@@ -49,11 +51,14 @@ releases:
           - --metric-resolution=60s
           - --kubelet-insecure-tls
           - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
-
+  # https://github.com/kubernetes/dashboard/issues/916#issuecomment-496317368
+  # http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:https/proxy/#/login
   - name: kubernetes-dashboard
     namespace: kube-system
-    chart: "stable/kubernetes-dashboard"
+    chart: "k8s-dashboard/kubernetes-dashboard"
     installed: true
     values:
       - rbac:
           create: true
+      - metricsScraper:
+          enabled: true
