@@ -10,10 +10,15 @@ kubectl expose replicaset echo --type=LoadBalancer
 kubectl apply -f local-cluster/dashboard-admin.yaml
 kubectl port-forward --address localhost,0.0.0.0 service/echo 8080:8080
 # NOTE: tilt up is broken until I can figure out why helmfile template command doesn't create pods in teh correct namespaces
+
+# disable admin-user
+
+ kubectl delete clusterrolebinding kubernetes-dashboard
 ```
 
 get scret for kubectl dasboard
 
 ```
-kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+# https://thorsten-hans.com/access-kubernetes-dashboard-on-rbac-enabled-azure-kubernetes
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep kubernetes-dashboard-token | awk '{print $1}')
 ```

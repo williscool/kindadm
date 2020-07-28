@@ -1,8 +1,14 @@
 {{ readFile "../../../common.yaml" }}
 
+# https://github.com/kubernetes/dashboard/issues/916#issuecomment-496317368
 releases:
   - name: kubernetes-dashboard
     chart: kubernetes-dashboard/kubernetes-dashboard
     version: 4.2.0
     namespace: kubernetes-dashboard
+    values:
+      - rbac:
+          create: true
+      - metricsScraper:
+          enabled: true
     <<: *common
