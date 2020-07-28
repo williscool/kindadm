@@ -12,8 +12,8 @@ repositories:
     url: "https://kubernetes.github.io/dashboard"
 
 releases:
-  - name: ingress
-    namespace: ingress
+  - name: ingress-nginx 
+    namespace: ingress-nginx # must match the applications that want to create ingress rules in it
     createNamespace: true 
     chart: "stable/nginx-ingress"
     installed: true
