@@ -11,6 +11,7 @@ repositories:
   - name: "k8s-dashboard"
     url: "https://kubernetes.github.io/dashboard"
 
+
 releases:
   - name: ingress-nginx 
     namespace: ingress-nginx # must match the applications that want to create ingress rules in it
@@ -62,3 +63,8 @@ releases:
           create: true
       - metricsScraper:
           enabled: true
+
+  - name: weave-scope
+    namespace: weave
+    chart: "stable/weave-scope"
+    installed: true
