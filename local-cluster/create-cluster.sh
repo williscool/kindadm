@@ -98,6 +98,10 @@ yes | mv "${KIND_CFG}.backup" "${KIND_CFG}"
 # Deploy desired svc-s
 helmfile -f ./helmfile.yaml apply > /dev/null
 
+# Admin setup
+
+kubectl apply -f dashboard-admin-rbac.yaml
+
 # Get node names
 CLUSTER_WRKS=$(kubectl get nodes | tail -n +2 | cut -d' ' -f1)
 IFS=$'\n' CLUSTER_WRKS=(${CLUSTER_WRKS})
