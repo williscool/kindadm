@@ -1,4 +1,4 @@
-# kindadm
+# kindadm - docker4win
 
 Create and administer a local one or multi-node Kubernetes cluster(s) in Docker container(s) with properly configured [Helm](https://github.com/helm/helm), [Ingress Controller](https://github.com/kubernetes/ingress-nginx), [MetalLB](https://github.com/metallb/metallb), [Metrics Server](https://github.com/kubernetes-sigs/metrics-server), and [Kubernetes Dashboard](https://github.com/kubernetes/dashboard) with simple interactive commands.
 
@@ -6,7 +6,7 @@ Supported Opt-In Software: [Docker Container Registry](https://docs.docker.com/r
 
 ## Quick Start
 
-To create a local one or multi-node Kubernetes (K8s) cluster(s) - please run:
+To create a local one or multi-node Kubernetes (K8s) cluster(s) that runs in Docker for Windows - please run:
 
 ```bash
 ## extra args are optional.
@@ -98,9 +98,15 @@ With `--sys_wide` flag the aforementioned binaries will be installed system-wide
 
 > **NOTE**: Changes are applied only if needed.
 
+## NOTES on getting this to run in docker4win among other things
+
+[NOTES.md](NOTES.md)
+
 ## Credits
 
-My name is [Miroslav Hadzhiev](https://www.linkedin.com/in/mehadzhiev/) - a DevOps Engineer located in Sofia, Bulgaria. I'm glad that you liked my automation.
+Hello my name is [William Harris](https://will.vc/). A software engineer / consultant based in the US.
+
+This would not be possible without the repo for which this is a fork is [Miroslav Hadzhiev's](https://www.linkedin.com/in/mehadzhiev/) - check it out at https://github.com/Xtigyro/deploy-kubernetes-kind/
 
 ## License
 
