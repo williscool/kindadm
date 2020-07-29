@@ -1,8 +1,6 @@
-# deploy-kubernetes-kind
+# deploy-kubernetes-kind-docker4win
 
 Create a local one or multi-node K8s cluster preset for development with one command.
-
-> **NOTE**: Those of you who would like to use the automation with Helm v2 - please switch to branch `helm-v2`.
 
 ## Demo
 
@@ -10,13 +8,22 @@ Create a local one or multi-node K8s cluster preset for development with one com
 
 ## Quick Start
 
-To create a local one or multi-node K8s cluster in Docker container(s) with properly configured Helm v3, Ingress Controller, MetalLB, and Metrics Server - please run:
+To create a local one or multi-node K8s cluster in that runs in Docker for Windows with properly configured Helm v3, Ingress Controller, MetalLB, and Metrics Server - please run:
 
 ```bash
 cd local-cluster
-bash prerequisites-cmds.sh --helm_ver=3.[x].[x]             # Helm ver. is optional.
+
+# before you run check prerequisites-cmds.sh for commands things to have installed
+# I don't yet recommend running the prereqs script because it doesn't check to se if you've installed already
+
+# TODO this should just default to 3. 1 control plane and 2 workers
 bash create-cluster.sh --nodes=[1-99] --k8s_ver=1.[x].[x]   # Only no. of K8s nodes is mandatory.
 ```
+## Quirks
+
+always run `create-cluster.sh` with a `kind-cfg.yaml` that has an empty `nodes:` key the bash script always appeneds and you can end up creating more nodes than you intend to
+
+fixing this is a todo
 
 ## Helper Menu
 
@@ -38,10 +45,6 @@ Example:
 
 ## Prerequisite Notes
 
-The `prerequisites-cmds.sh` can be used either like a true Shell script, or the commands which are part of it can be executed one by one. It depends on your preference.
-
-`prerequisites-cmds.sh` downloads and installs the following software:
-
 1. Linux Docker container runtime (`docker.io` or `docker-ce` pkg depending on your OS).
 2. `kubectl` binary.
 3. `helm` binary.
@@ -49,10 +52,18 @@ The `prerequisites-cmds.sh` can be used either like a true Shell script, or the 
 5. `helmfile` binary.
 6. `kind` binary.
 
+`prerequisites-cmds.sh` downloads and installs the following software. please note the script does not check if these tools are already installed so read it first and use with caution:
+
+## NOTES on getting this to run in docker4win among other things
+
+[NOTES.md](NOTES.md)
+
 ## Credits
 
-My name is [Miroslav Hadzhiev](https://www.linkedin.com/in/mehadzhiev/) - a DevOps Engineer located in Sofia, Bulgaria. I'm glad that you liked my automation.
+Hello my name is [William Harris](https://will.vc/). A software engineer / consultant based in the US.
 
-## Licence
+This would not be possible without the repo for which this is a fork is [Miroslav Hadzhiev's](https://www.linkedin.com/in/mehadzhiev/) - check it out at https://github.com/Xtigyro/deploy-kubernetes-kind/
+
+## License
 
 GNU General Public License v2.0
