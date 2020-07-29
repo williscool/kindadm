@@ -11,7 +11,13 @@ kubectl expose replicaset echo --type=LoadBalancer
 # admin for local cluster only use this for prod https://github.com/kubernetes/dashboard/issues/4179#issuecomment-610078007
 kubectl apply -f local-cluster/dashboard-admin.yaml 
 kubectl port-forward --address localhost,0.0.0.0 service/echo 8080:8080
+
+wget localhost:8080
 # NOTE: tilt up is broken until I can figure out why helmfile template command doesn't create pods in teh correct namespaces
+
+kubectl proxy # start proxy so you can access admin panel
+visit
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:https/proxy/#/overview?namespace=default
 
 # disable admin-user
 
