@@ -23,6 +23,11 @@ http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-da
 
 # disable admin-user
 kubectl delete clusterrolebinding kubernetes-dashboard
+
+
+# cluster digagram genertator
+kubectl port-forward --address localhost,0.0.0.0 service/weave-scope-weave-scope 4040:80 -n weave
+
 ```
 
 get scret for kubectl dasboard
