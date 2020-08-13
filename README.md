@@ -1,5 +1,7 @@
 # kindadm - docker4win
 
+aka Docker Desktop aka Docker for Windows also probably works on Docker for Mac
+
 Create and administer a local one or multi-node Kubernetes cluster(s) in Docker container(s) with properly configured [Helm](https://github.com/helm/helm), [Ingress Controller](https://github.com/kubernetes/ingress-nginx), [MetalLB](https://github.com/metallb/metallb), [Metrics Server](https://github.com/kubernetes-sigs/metrics-server), and [Kubernetes Dashboard](https://github.com/kubernetes/dashboard) with simple interactive commands.
 
 Supported Opt-In Software: [Docker Container Registry](https://docs.docker.com/registry/), and [Weave Scope](https://www.weave.works/oss/scope/).
