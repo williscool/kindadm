@@ -1,6 +1,8 @@
 # deploy-kubernetes-kind-docker4win
 
-Create a local one or multi-node K8s cluster preset for development with one command.
+aka Docker Desktop aka Docker for Windows also probably works on Docker for Mac
+
+Create a local one or multi-node K8s cluster in kind preset for development with one command.
 
 ## Demo
 
