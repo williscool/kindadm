@@ -400,3 +400,9 @@ if [[ "$OPT_APPS" != 'false' ]]; then
   fi
   echo -e "${LIGHT_GREEN}\u2713${NC} Optional apps - ${LIGHT_GREEN}deployed${NC}."
 fi
+
+# https://codelearn.me/2019/01/13/wsl-windows-toast.html
+# https://github.com/microsoft/WSL/issues/2466#issuecomment-662184581
+if grep -q Microsoft /proc/version; then
+ powershell.exe 'New-BurntToastNotification -Text "k8s cluster is up!" -Sound "Default" -SnoozeAndDismiss'
+fi
