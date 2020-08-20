@@ -6,8 +6,12 @@ LIGHT_RED='\033[1;31m'
 NC='\033[0m'   # No Color
 KIND_CFG="./kind-cfg.yaml"   # base config file
 
+git co $KIND_CFG
 
 # TODO: default to 1 control plane and 2 workers and log out that is what it is doing
+# TODO: move this to node so is easier check exceptions https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
+# acctyally now that I think about it this is a good test case for pulumi
+#  https://www.pulumi.com/docs/guides/adopting/from_kubernetes/#deploying-a-single-kubernetes-yaml-file
 if [[ -z "$1" ]]; then
   printf "\nAt least no. of K8s nodes must be set. \nUse ${LIGHT_GREEN}\"bash $0 --help\"${NC} for details.\n"
   exit 1
@@ -101,6 +105,13 @@ helmfile -f ./helmfile.yaml apply > /dev/null
 # Admin setup
 
 kubectl apply -f dashboard-admin-rbac.yaml
+
+
+# https://codelearn.me/2019/01/13/wsl-windows-toast.html
+# https://github.com/microsoft/WSL/issues/2466#issuecomment-662184581
+if grep -q Microsoft /proc/version; then
+ powershell.exe 'New-BurntToastNotification -Text "k8s cluster is up!" -Sound "Default" -SnoozeAndDismiss'
+fi
 
 # Get node names
 CLUSTER_WRKS=$(kubectl get nodes | tail -n +2 | cut -d' ' -f1)

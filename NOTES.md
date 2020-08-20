@@ -14,6 +14,7 @@ kubectl port-forward --address localhost,0.0.0.0 service/echo 8080:8080
 wget localhost:8080
 
 # NOTE: tilt up is broken until I can figure out why helmfile template command doesn't create pods in teh correct namespaces
+# tilt's cool check it out https://tilt.dev/
 
 # admin for local cluster only use this for prod https://github.com/kubernetes/dashboard/issues/4179#issuecomment-610078007
 kubectl apply -f local-cluster/dashboard-admin.yaml 
@@ -42,4 +43,11 @@ get get pod scheduling events
 ```
 # https://stackoverflow.com/a/61409507/511710
 kubectl get events
+```
+
+replace a thing when you update it
+
+```
+
+kubectl replace -f your-cool-thing.yaml
 ```
