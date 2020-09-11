@@ -6,8 +6,6 @@ LIGHT_RED='\033[1;31m'
 NC='\033[0m'   # No Color
 KIND_CFG="./kind-cfg.yaml"   # base config file
 
-git co $KIND_CFG
-
 # TODO: default to 1 control plane and 2 workers and log out that is what it is doing
 # TODO: move this to node so is easier check exceptions https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
 # acctyally now that I think about it this is a good test case for pulumi
@@ -94,6 +92,8 @@ for (( i=0; i<"${NO_NODES_CREATE}"; ++i));
 
 # Create kINd cluster
 # using retain because I want to be able to debug if cluster creation fails
+which kind
+kind version
 kind create cluster --retain --config "${KIND_CFG}" --name kind-"${NO_NODES}" 
 
 # Revert the kINd config
@@ -104,6 +104,8 @@ helmfile -f ./helmfile.yaml apply > /dev/null
 
 # Admin setup
 
+echo 'run this script from https://github.com/tilt-dev/kind-local before the registry will work!'
+kubectl apply -f kind-local-cluster-config-map.yaml
 kubectl apply -f dashboard-admin-rbac.yaml
 
 
@@ -112,6 +114,9 @@ kubectl apply -f dashboard-admin-rbac.yaml
 if grep -q Microsoft /proc/version; then
  powershell.exe 'New-BurntToastNotification -Text "k8s cluster is up!" -Sound "Default" -SnoozeAndDismiss'
 fi
+
+# reset the kind config so you don't end up creating a bunch of junk nodes on accident TODO: put behind cli flag and default false
+# git co $KIND_CFG
 
 # Get node names
 CLUSTER_WRKS=$(kubectl get nodes | tail -n +2 | cut -d' ' -f1)

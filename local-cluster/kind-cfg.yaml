@@ -1,6 +1,10 @@
 # this config file contains all config fields with comments
 kind: Cluster
-apiVersion: kind.sigs.k8s.io/v1alpha3
+apiVersion: kind.x-k8s.io/v1alpha4
+containerdConfigPatches:
+- | # https://github.com/tilt-dev/kind-local/blob/master/kind-with-registry.sh
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:5000"]
+    endpoint = ["http://kind-registry:5000"]
 # patch the generated kubeadm config with some extra settings
 kubeadmConfigPatches:
 - |
@@ -10,13 +14,4 @@ kubeadmConfigPatches:
     name: config
   networking:
     serviceSubnet: 10.0.0.0/16
-# patch it further using a JSON 6902 patch
-kubeadmConfigPatchesJson6902:
-- group: kubeadm.k8s.io
-  version: v1
-  kind: ClusterConfiguration
-  patch: |
-    - op: add
-      path: /apiServer/certSANs/-
-      value: my-hostname
 nodes:
