@@ -12,14 +12,22 @@ repositories:
     url: "https://kubernetes.github.io/dashboard"
 
 
+
 releases:
+  # comment out ingress-nginx if you want to setup differnt ingress in the other projects on your kind k8s cluser
   - name: ingress-nginx 
-    namespace: ingress-nginx # must match the applications that want to create ingress rules in it
+    namespace: ingress-nginx # MUST match the applications that want to create ingress rules in it
     createNamespace: true 
     chart: "stable/nginx-ingress"
     installed: true
     values:
       - controller:
+          service:
+            create: true
+            httpPort:
+              enable: true
+            httpsPort:
+              enable: true
           extraArgs:
             enable-ssl-passthrough: ""
           hostNetwork: true
