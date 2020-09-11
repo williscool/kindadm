@@ -9,6 +9,12 @@ releases:
     version: 7.6.9
     values:
       - controller:
+          service:
+            create: true
+            httpPort:
+              enable: true
+            httpsPort:
+              enable: true
           extraArgs:
             enable-ssl-passthrough: ""
           hostNetwork: true
