@@ -1,4 +1,4 @@
-# kindadm - docker4win
+# kindadm (formerly deploy-kubernetes-kind) - docker4win 
 
 aka Docker Desktop aka Docker for Windows also probably works on Docker for Mac
 
