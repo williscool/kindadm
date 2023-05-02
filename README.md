@@ -106,7 +106,7 @@ With `--sys_wide` flag the aforementioned binaries will be installed system-wide
 
 ## Credits
 
-Hello my name is [William Harris](https://will.vc/). A software engineer / consultant based in the US.
+Hello my name is [William Harris](https://boujeehacker.com/). A software engineer / consultant based in the US.
 
 This would not be possible without the repo for which this is a fork is [Miroslav Hadzhiev's](https://www.linkedin.com/in/mehadzhiev/) - check it out at https://github.com/Xtigyro/deploy-kubernetes-kind/
 
