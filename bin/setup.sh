@@ -2,10 +2,10 @@
 set -eu
 
 # default versions
-HELMFILE_VER='0.139.7'
-HELM_PLUGIN_DIFF_VER='3.1.3'
-KIND_VERSION='0.11.1'
-KUBECTL_VERSION='1.21.1'
+HELMFILE_VER='0.146.0'
+HELM_PLUGIN_DIFF_VER='3.6.0'
+KIND_VERSION='0.16.0'
+KUBECTL_VERSION='1.25.2'
 
 # passed on vars
 HELM_VER="$1"
@@ -19,7 +19,7 @@ LIGHT_RED='\033[1;31m'
 NC='\033[0m' # No Color
 INSTALL_CMD='false'
 DOCKER_PKG='false'
-REQ_BINS=(docker curl wget bash)
+REQ_BINS=(docker curl wget bash jq)
 
 # Check req. pkgs
 OS_ID=$(awk -F= '/^ID=/{print $2}' /etc/os-release)
@@ -33,7 +33,7 @@ elif [ "$OS_ID" == "ubuntu" ] || [ "$OS_ID" == "debian" ] ; then
 fi
 
 # check and advise on missing prerequisite os pkgs
-REQ_PKGS=("$DOCKER_PKG" curl wget bash)
+REQ_PKGS=("$DOCKER_PKG" curl wget bash jq)
 for ((i=0;i<"${#REQ_BINS[@]}";i++)); do
   if ! `command -v "${REQ_BINS[i]}" >/dev/null 2>&1` ; then
     if [[ "$INSTALL_CMD" != 'false' ]] ; then
@@ -69,11 +69,11 @@ if ! `"$EXEC_DIR"/kubectl version --client=true 2>/dev/null | grep -q "$KUBECTL_
     yes | sudo cp "$CACHE_DIR"/kubectl "$EXEC_DIR/kubectl" >/dev/null 2>&1
   fi
   echo -e "\n${LIGHT_GREEN}kubectl installed:${NC}" && \
-  "$EXEC_DIR/kubectl" version --client=true && \
+  "$EXEC_DIR/kubectl" version --client=true --output=yaml && \
   source <("$EXEC_DIR/kubectl" completion bash 2>/dev/null)
 else
   echo -e "\n${LIGHT_GREEN}kubectl present:${NC}" && \
-  "$EXEC_DIR/kubectl" version --client=true && \
+  "$EXEC_DIR/kubectl" version --client=true --output=yaml && \
   source <("$EXEC_DIR/kubectl" completion bash 2>/dev/null)
 fi
 
@@ -122,9 +122,10 @@ fi
 if ! `"$EXEC_DIR"/helmfile -v 2>/dev/null | grep -q "$HELMFILE_VER"` ; then
   if ! `"$CACHE_DIR"/helmfile -v 2>/dev/null | grep -q "$HELMFILE_VER"` ; then
     echo -e "\n${LIGHT_GREEN}Downloading Helmfile binary...${NC}" && \
-    curl -L https://github.com/roboll/helmfile/releases/download/v"$HELMFILE_VER"/helmfile_linux_amd64 -o "$CACHE_DIR"/helmfile-"$HELMFILE_VER" && \
-    chmod +x "$CACHE_DIR"/helmfile-"$HELMFILE_VER"
-    yes | cp "$CACHE_DIR"/helmfile-"$HELMFILE_VER" "$CACHE_DIR"/helmfile
+    curl -L https://github.com/helmfile/helmfile/releases/download/v"$HELMFILE_VER"/helmfile_"$HELMFILE_VER"_linux_amd64.tar.gz -o "$CACHE_DIR"/helmfile-"$HELMFILE_VER".tar.gz && \
+    tar xf "$CACHE_DIR"/helmfile-"$HELMFILE_VER".tar.gz -C "$CACHE_DIR" && \
+    chmod +x "$CACHE_DIR"/helmfile && \
+    yes | cp "$CACHE_DIR"/helmfile "$CACHE_DIR"/helmfile-"$HELMFILE_VER"
   else
     yes | cp "$CACHE_DIR"/helmfile-"$HELMFILE_VER" "$CACHE_DIR"/helmfile
   fi

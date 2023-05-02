@@ -4,7 +4,7 @@
 releases:
   - name: kubernetes-dashboard
     chart: kubernetes-dashboard/kubernetes-dashboard
-    version: 4.2.0
+    version: 5.4.1
     namespace: kubernetes-dashboard
     values:
       - rbac:

@@ -3,7 +3,7 @@
 releases:
   - name: metrics-server
     namespace: metrics-server
-    version: 5.8.9
+    version: 5.11.9
     values:
       - args:
           - --metric-resolution=60s

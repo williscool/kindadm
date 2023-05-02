@@ -6,7 +6,7 @@ releases:
     createNamespace: true
     wait: false
     atomic: false
-    version: 7.6.9
+    version: 9.2.6
     values:
       - controller:
           service:

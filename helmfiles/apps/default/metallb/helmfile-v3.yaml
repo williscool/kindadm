@@ -4,7 +4,7 @@ releases:
   - name: metallb
     namespace: metallb-system
     createNamespace: true
-    version: 2.4.0
+    version: 3.0.7
     values:
       - configInline:
           address-pools:
