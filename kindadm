@@ -402,6 +402,9 @@ if [[ "$OPT_APPS" != 'false' ]]; then
   echo -e "${LIGHT_GREEN}\u2713${NC} Optional apps - ${LIGHT_GREEN}deployed${NC}."
 fi
 
+# TODO: use kind-with-registry.sh to deploy registry
+# you can tst that it works with  docker exec -it kind-2-control-plane curl http://kind-registry:5000/v2/_catalog
+
 # https://codelearn.me/2019/01/13/wsl-windows-toast.html
 # https://github.com/microsoft/WSL/issues/2466#issuecomment-662184581
 if grep -q Microsoft /proc/version; then
